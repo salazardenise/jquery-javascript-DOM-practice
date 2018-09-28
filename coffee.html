@@ -47,7 +47,7 @@
     <script>
 
     // Set these variables to their DOM elements
-
+    $('#revenue').html(`$0.00`);
     $('#coffee-image').attr('src', 'static/coffee_beans.jpg');
     $('#coffee-image').on('click', () => makeCoffee("brew"));
 
@@ -60,19 +60,30 @@
     const drinksOrdered = [];
     function makeCoffee(drinkType) {
         drinksOrdered.push(drinkType);
-        $('#coffee-image').attr('src', 'static/coffee_machine.jpg');
-        revenue += prices[drinkType];
-        $('#revenue').html(`$${revenue}`);
-        setTimeout(pourMug, 1500);
+        $('#coffee-image').fadeOut(1000, () => {
+            $('#coffee-image').attr('src', 'static/coffee_machine.jpg');
+            $('#coffee-image').fadeIn(1000, () => {
+                revenue += prices[drinkType];
+                $('#revenue').html(`$${revenue.toFixed(2)}`);
+                setTimeout(pourMug, 1500);
+            });
+        });
     }
 
     function pourMug() {
-        $('#coffee-image').attr('src', 'static/coffee_mug.jpg');
-        setTimeout(showCoffeeBeans, 2500);
+        $('#coffee-image').fadeOut(1000, () => {
+            $('#coffee-image').attr('src', 'static/coffee_mug.jpg');
+            $('#coffee-image').fadeIn(1000, () => setTimeout(showCoffeeBeans, 2500));
+        });
+        // setTimeout(showCoffeeBeans, 2500);
     } 
 
     function showCoffeeBeans() {
-        $('#coffee-image').attr('src', 'static/coffee_beans.jpg');
+        $('#coffee-image').fadeOut(1000, () => {
+            $('#coffee-image').attr('src', 'static/coffee_beans.jpg');
+            $('#coffee-image').fadeIn(1000);
+        });
+
     }
 
 
